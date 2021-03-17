@@ -15,6 +15,10 @@ provider "google" {
   zone      = "europe-north1-a"
 }
 
+resource "google_compute_address" "vm_static_ip" {
+  name = "terraform-static-ip"
+}
+
 resource "google_compute_instance" "app" {
   name         = "app"
   machine_type = "e2-small" // 2vCPU, 2GB RAM
@@ -40,7 +44,7 @@ resource "google_compute_instance" "app" {
   network = "default"
 
   access_config {
-    nat_ip = ""
+    nat_ip = google_compute_address.vm_static_ip.address
     }
   }
 
