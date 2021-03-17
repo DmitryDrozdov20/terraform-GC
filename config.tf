@@ -33,11 +33,14 @@ resource "google_compute_instance" "app" {
     }
   }
 
+  // Make sure flask is installed on all new instances for later steps
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y"
+
   network_interface {
   network = "default"
+
   access_config {
-    // Ephemeral IP and external static IP
-      #nat_ip = google_compute_address.static.address
+    # nat_ip = google_compute_address.static.address
     }
   }
 
