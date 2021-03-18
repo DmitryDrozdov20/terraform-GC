@@ -19,11 +19,11 @@ resource "google_compute_address" "vm_static_ip" {
   name = "terraform-static-ip"
 }
 
-resource "google_compute_instance" "app" {
-  name         = "app"
+resource "google_compute_instance" "stage" {
+  name         = "stage"
   machine_type = "e2-small" // 2vCPU, 2GB RAM
   #machine_type = "e2-medium" // 2vCPU, 4GB RAM
-  #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM / 6.5GB RAM per CPU, if needed more refer to next line
+  #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
   #machine_type = "custom-2-15360-ext" // 2vCPU, 15GB RAM
 
   #tags = ["terraform", "template"]
@@ -37,7 +37,7 @@ resource "google_compute_instance" "app" {
     }
   }
 
-  // Make sure flask is installed on all new instances for later steps
+  // Startup script - update, install python3-pip (for Ansible) 
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y"
 
   network_interface {
@@ -49,6 +49,6 @@ resource "google_compute_instance" "app" {
   }
 
   metadata = {
-    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Point to ssh public key for user root
+    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
   }
 }
