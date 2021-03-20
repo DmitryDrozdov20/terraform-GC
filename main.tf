@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   # Configuration options
-  credentials = file("var/lib/jenkins/workspace/CG_instance_create/cred-gcp.json")
+  credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
   region      = "europe-north1"
   zone      = "europe-north1-a"
