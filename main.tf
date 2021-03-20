@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   # Configuration options
-  credentials = file("silken-realm-307723-75330dcabcd8.json")
+  credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
   region      = "europe-north1"
   zone      = "europe-north1-a"
