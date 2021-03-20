@@ -54,7 +54,7 @@ resource "google_compute_instance" "stage" {
     }
   }
 
-  metadata = {
-    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
-  }
+  #metadata = {
+  #  ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
+  #}
 }
