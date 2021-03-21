@@ -42,7 +42,7 @@ resource "google_compute_instance" "default" {
   allow_stopping_for_update = true
 
   boot_disk {
-    auto_delete = "yes"
+    auto_delete = "true"
     initialize_params {
       size = "10"
       type = "pd-balanced" // Available options: pd-standard, pd-balanced, pd-ssd
