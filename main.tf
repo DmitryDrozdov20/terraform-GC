@@ -59,6 +59,23 @@ resource "google_compute_instance" "stage" {
   #  ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
   #}
 
+provider "google" {
+  # Configuration options
+  credentials = file("cred-gcp.json")
+  project     = "silken-realm-307723"
+  region      = "europe-north1"
+  zone      = "europe-north1-a"
+  #credentials = var.google_credentials
+  }
+
+  #variable "google_credentials" {
+  #  description = "the contents of a service account key file in JSON format."
+  #  type = string
+  #}
+
+ resource "google_compute_address" "vm_static_ip" {
+  name = "terraform-static-ip"
+}
   resource "google_compute_instance" "prod" {
   name         = "prod"
   machine_type = "e2-small" // 2vCPU, 2GB RAM
