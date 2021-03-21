@@ -29,7 +29,7 @@ resource "google_compute_address" "vm_static_ip" {
 resource "google_compute_instance" "stage" {
   #name         = "stage"
   tags = {
-    name = var.instance_tags
+    name = ["stage", "prod"]
   }
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   #machine_type = "e2-medium" // 2vCPU, 4GB RAM
