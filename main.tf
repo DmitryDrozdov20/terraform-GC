@@ -26,10 +26,10 @@ resource "google_compute_address" "vm_static_ip" {
   name = "terraform-static-ip"
 }
 
-resource "google_compute_instance" {
+resource "google_compute_instance" "app" {
   #name         = "stage"
   # tags = {
-  name = ["stage", "prod"]
+  name = app - ["stage", "prod"]
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   #machine_type = "e2-medium" // 2vCPU, 4GB RAM
   #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
