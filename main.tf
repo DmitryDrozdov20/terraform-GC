@@ -26,7 +26,7 @@ resource "google_compute_address" "vm_static_ip" {
   name = "terraform-static-ip"
 }
 
-resource "google_compute_instance" "var.instance_tags" {
+resource "google_compute_instance" "default" {
   #name         = "stage"
   # tags = {
   name = var.instance_tags
