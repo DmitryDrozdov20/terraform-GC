@@ -12,8 +12,8 @@ provider "google" {
   node_count = var.node_count
   credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
-  region      = "${var.region}"
-  zone      = "${var.zone}"
+  region      = var.region
+  zone      = var.zone
   #credentials = var.google_credentials
   }
 
@@ -29,9 +29,9 @@ resource "google_compute_address" "vm_static_ip" {
 resource "google_compute_instance" "stage" {
   #name         = "stage"
   tags = {
-    name = "${var.instance_tags}"
+    name = var.instance_tags
   }
-  machine_type = "${var.machine_type}" // 2vCPU, 2GB RAM
+  machine_type = var.machine_type // 2vCPU, 2GB RAM
   #machine_type = "e2-medium" // 2vCPU, 4GB RAM
   #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
   #machine_type = "custom-2-15360-ext" // 2vCPU, 15GB RAM
