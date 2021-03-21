@@ -1,4 +1,4 @@
-variable "instance_count" {
+variable "node_count" {
   default = "2"
 }
 

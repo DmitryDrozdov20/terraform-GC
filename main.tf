@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   # Configuration options
-  count = "${var.instance_count}"
+  node_count = "${var.node_count}"
   credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
   region      = "${var.region}"
