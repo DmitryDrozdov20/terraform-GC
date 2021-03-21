@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   # Configuration options
-  count = var.node_count
+  node_count = var.node_count
   credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
   region      = var.region
@@ -28,8 +28,11 @@ resource "google_compute_address" "vm_static_ip" {
 
 resource "google_compute_instance" "default" {
   #name         = "stage"
-  # tags = {
-  name = var.instance_tags
+  tags = {
+    name = var.instance_tags
+  }
+
+  # name = var.instance_tags
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   #machine_type = "e2-medium" // 2vCPU, 4GB RAM
   #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
