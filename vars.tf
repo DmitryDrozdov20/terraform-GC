@@ -4,7 +4,7 @@ variable "node_count" {
 
 variable "instance_tags" {
   type = "list"
-  default = ["stage", "prod"]
+  default = stage,prod
 }
 
 variable "machine_type" {
