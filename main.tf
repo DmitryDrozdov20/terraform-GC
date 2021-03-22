@@ -60,9 +60,10 @@ resource "google_compute_instance" "default" {
 
   access_config {
     nat_ip = google_compute_address.vm_static_ip[count.index].address
+    }
   }
-  #metadata = {
-  #  ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
-  #  }
+
+  metadata = {
+    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
   }
-}
+}  
