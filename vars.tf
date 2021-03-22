@@ -8,7 +8,10 @@ variable "instance_tags" {
 }
 
 variable "machine_type" {
-  default = "e2-small"
+  default = "e2-small" // 2vCPU, 2GB RAM
+  # "e2-medium"        // 2vCPU, 4GB RAM
+  # "custom-4-4096"    // 4vCPU, 4GB RAM
+  # "custom-4-8192"    // 4vCPU, 8GB RAM
 }
 
 variable "region" {
