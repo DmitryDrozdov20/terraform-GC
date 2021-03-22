@@ -64,6 +64,6 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
+    ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
   }
 }  
