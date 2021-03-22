@@ -59,8 +59,8 @@ resource "google_compute_instance" "default" {
     }
   }
 
-output "ip-stage[count.index]" {
-    value = google_compute_instance.default[count.index].network_interface.0.access_config.0.nat_ip
+output "ip" {
+    value = google_compute_instance.*.network_interface.0.access_config.0.nat_ip
 }
 
 resource "time_sleep" "wait_30_seconds" {
