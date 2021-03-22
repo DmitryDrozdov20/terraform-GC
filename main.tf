@@ -29,7 +29,8 @@ resource "google_compute_address" "vm_static_ip" {
 resource "google_compute_instance" "default" {
   #name         = "stage"
   count = var.node_count
-  name = var.instance_tags
+  name = element(tolist(var.instance_tags), 0)
+  # name = var.instance_tags
   
 
   # name = var.instance_tags
