@@ -23,7 +23,8 @@ provider "google" {
 #}
 
 resource "google_compute_address" "vm_static_ip" {
-  name = "terraform-static-ip"
+  count = var.node_count
+  name = element(tolist(var.instance_tags), count.index)
 }
 
 resource "google_compute_instance" "default" {
