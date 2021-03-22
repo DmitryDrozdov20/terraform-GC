@@ -3,6 +3,7 @@ variable "node_count" {
 }
 
 variable "instance_tags" {
+  type    = list(string)
   default = ["stage", "prod"]
 }
 
