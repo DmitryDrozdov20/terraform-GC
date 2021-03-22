@@ -28,10 +28,19 @@ resource "google_compute_address" "vm_static_ip" {
 }
 
 resource "google_compute_instance" "default" {
+  #name         = "stage"
   count = var.node_count
   name = element(tolist(var.instance_tags), count.index)
-  machine_type = var.machine_type
+  # name = var.instance_tags
   
+
+  # name = var.instance_tags
+  machine_type = var.machine_type // 2vCPU, 2GB RAM
+  #machine_type = "e2-medium" // 2vCPU, 4GB RAM
+  #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
+  #machine_type = "custom-2-15360-ext" // 2vCPU, 15GB RAM
+  
+
   allow_stopping_for_update = true
 
   boot_disk {
@@ -56,42 +65,5 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
-    }
   }
-
-output "ip" {
-    value = google_compute_instance.*.network_interface.0.access_config.0.nat_ip
-}
-
-resource "time_sleep" "wait_30_seconds" {
-  depends_on = [google_compute_instance.default]
-
-  create_duration = "30s" // Change to 90s
-}
-
-resource "null_resource" "ansible_hosts_provisioner" {
-  depends_on = [time_sleep.wait_30_seconds]
-  provisioner "local-exec" {
-    interpreter = ["/bin/bash" ,"-c"]
-    command = <<EOT
-      export ip-stage=$(terraform output ip-stage);
-      echo $ip-stage;
-      sed -i -e "s/staging_instance_ip/$ip-stage/g" ./inventory/hosts;
-      sed -i -e 's/"//g' ./inventory/hosts;
-      export ANSIBLE_HOST_KEY_CHECKING=False
-    EOT
-  }
-}
-
-resource "time_sleep" "wait_5_seconds" {
-  depends_on = [null_resource.ansible_hosts_provisioner]
-
-  create_duration = "5s"
-}
-
-resource "null_resource" "ansible_playbook_provisioner" {
-  depends_on = [time_sleep.wait_5_seconds]
-  provisioner "local-exec" {
-    command = "ansible-playbook -i inventory/hosts playbook.yml"
-  }
-}
+}  
