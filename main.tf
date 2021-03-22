@@ -67,3 +67,8 @@ resource "google_compute_instance" "default" {
     ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
   }
 }  
+resource "null_resource" "ansible_playbook_provisioner" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inventory/hosts playbook.yml"
+  }
+}
