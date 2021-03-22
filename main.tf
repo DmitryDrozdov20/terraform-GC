@@ -56,11 +56,11 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
+    }
   }
 
-  output "ip-stage" {
-    value = google_compute_instance.default[0].network_interface.0.access_config.0.nat_ip
-  }
+output "count.index" {
+    value = google_compute_instance.default[count.index].network_interface.0.access_config.0.nat_ip
 }
 
 resource "time_sleep" "wait_30_seconds" {
