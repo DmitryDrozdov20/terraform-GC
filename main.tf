@@ -52,7 +52,7 @@ resource "google_compute_instance" "default" {
   }  
 
 # Static IP VM for Ansible
-output "ip[count+1]" {
+output "name" {
  value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
