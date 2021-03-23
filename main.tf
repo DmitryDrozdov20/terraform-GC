@@ -15,13 +15,15 @@ provider "google" {
   }
 
 resource "google_compute_address" "vm_static_ip" {
-  count = var.node_count
-  name = element(tolist(var.instance_tags), count.index)
+  name = stage_ip
+  #count = var.node_count
+  #name = element(tolist(var.instance_tags), count.index)
 }
 
-resource "google_compute_instance" "default" {
-  count = var.node_count
-  name = element(tolist(var.instance_tags), count.index)
+resource "google_compute_instance" "vm_stage {
+  name = stage
+  # count = var.node_count
+  # name = element(tolist(var.instance_tags), count.index)
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   
   allow_stopping_for_update = true
@@ -53,11 +55,11 @@ resource "google_compute_instance" "default" {
 
 # Static IP VM for Ansible
 output "ip" {
- value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
+ value = google_compute_instance.stage_vm.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
 resource  "time_sleep" "wait_30_seconds" {
-  depends_on = [google_compute_instance.default]
+  depends_on = [google_compute_instance.vm_stage]
 
   create_duration = "30s"
 }
