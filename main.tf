@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    google = {
-      source = "hashicorp/google"
-      version = "3.61.0"
-    }
-  }
-}
-
 provider "google" {
   credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
