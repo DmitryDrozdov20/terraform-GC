@@ -14,7 +14,7 @@ provider "google" {
   zone      = var.zone
   }
 
-resource "google_compute_address" "vm_static_ip" {
+resource "google_compute_address" "stage_ip" {
   name = stage_ip
   #count = var.node_count
   #name = element(tolist(var.instance_tags), count.index)
@@ -54,7 +54,7 @@ resource "google_compute_instance" "vm_stage" {
   }  
 
 # Static IP VM for Ansible
-output "ip" {
+output "stage_ip" {
  value = google_compute_instance.vm_stage.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
@@ -72,9 +72,9 @@ resource "null_resource" "ansible_hosts_provisioner" {
     command = <<EOT
       cat <<EOF >./inventory/hosts
 [staging] 
-$(terraform output ip)
+$(terraform output stage_ip)
 [prod]
-$(terraform output ip)
+$(terraform output stage_ip)
 EOF
       export ANSIBLE_HOST_KEY_CHECKING=False
     EOT
