@@ -56,7 +56,7 @@ output "name" {
  value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
-resource "wait_time" "real_30_seconds" {
+resource "waiting_time" "real_30_seconds" {
   depends_on = [google_compute_instance.default]
 
   create_duration = "30s"
@@ -64,7 +64,7 @@ resource "wait_time" "real_30_seconds" {
 
 # create inventory file after 30s
 resource "null_resource" "ansible_hosts_provisioner" {
-   depends_on = [wait_time.real_30_seconds]
+   depends_on = [waiting_time.real_30_seconds]
   provisioner "local-exec" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
