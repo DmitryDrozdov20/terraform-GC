@@ -8,19 +8,11 @@ terraform {
 }
 
 provider "google" {
-  # Configuration options
-  # node_count = var.node_count
   credentials = file("cred-gcp.json")
   project     = "silken-realm-307723"
   region      = var.region
   zone      = var.zone
-  #credentials = var.google_credentials
   }
-
-#variable "google_credentials" {
-#  description = "the contents of a service account key file in JSON format."
-#  type = string
-#}
 
 resource "google_compute_address" "vm_static_ip" {
   count = var.node_count
@@ -28,19 +20,10 @@ resource "google_compute_address" "vm_static_ip" {
 }
 
 resource "google_compute_instance" "default" {
-  #name         = "stage"
   count = var.node_count
   name = element(tolist(var.instance_tags), count.index)
-  # name = var.instance_tags
-  
-
-  # name = var.instance_tags
   machine_type = var.machine_type // 2vCPU, 2GB RAM
-  #machine_type = "e2-medium" // 2vCPU, 4GB RAM
-  #machine_type = "custom-6-20480" // 6vCPU, 20GB RAM
-  #machine_type = "custom-2-15360-ext" // 2vCPU, 15GB RAM
   
-
   allow_stopping_for_update = true
 
   boot_disk {
@@ -52,7 +35,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  // Startup script - update, install python3-pip (for Ansible) 
+  # Startup script - update, install python3-pip (for Ansible) 
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y"
 
   network_interface {
@@ -65,10 +48,40 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
-  }
-}  
-resource "null_resource" "ansible_playbook_provisioner" {
+    }
+  }  
+
+# Static IP VM for Ansible
+output "ip" {
+ value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
+}
+# Waiting_30s 
+resource "waiting" "30s" {
+  depends_on = [google_compute_instance.default]
+
+  create_duration = "30s"
+}
+
+# create inventory file after 30s
+resource "null_resource" "ansible_hosts_provisioner" {
+   depends_on = [waiting.30s]
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory/hosts playbook.yml"
+    interpreter = ["/bin/bash" ,"-c"]
+    command = <<EOT
+      cat <<EOF >./inventory/hosts
+[staging] 
+$(terraform output ip)
+[prod]
+$(terraform output ip)
+EOF
+      export ANSIBLE_HOST_KEY_CHECKING=False
+    EOT
+  }
+}
+# run playbook on created hosts
+resource "null_resource" "ansible_playbook_provisioner" {
+  depends_on = [null_resource.ansible_hosts_provisioner]
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ./inventory/hosts playbook.yml"
   }
 }
