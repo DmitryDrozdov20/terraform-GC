@@ -55,7 +55,7 @@ resource "google_compute_instance" "vm_stage" {
 
 # Static IP VM for Ansible
 output "ip" {
- value = google_compute_instance.stage_vm.network_interface.0.access_config.0.nat_ip
+ value = google_compute_instance.vm_stage.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
 resource  "time_sleep" "wait_30_seconds" {
