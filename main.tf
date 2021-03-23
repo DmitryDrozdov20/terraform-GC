@@ -14,7 +14,7 @@ provider "google" {
   zone      = var.zone
   }
 
-resource "google_compute_address" "stage_ip" {
+resource "google_compute_address" "vm_stage_ip" {
   name = stage_ip
   #count = var.node_count
   #name = element(tolist(var.instance_tags), count.index)
@@ -44,7 +44,7 @@ resource "google_compute_instance" "vm_stage" {
   network = "default"
 
   access_config {
-    nat_ip = google_compute_address.vm_static_ip.address
+    nat_ip = google_compute_address.vm_stage_ip.address
     }
   }
 
