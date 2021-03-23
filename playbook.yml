@@ -1,6 +1,6 @@
 ---
 - name: install app on stage(java, maven)
-  hosts: build
+  hosts: stage
   become: yes
 
   tasks:
@@ -65,4 +65,4 @@
     synchronize:
      src: /home/repo/target/hello-1.0.war
      dest: /var/lib/tomcat9/webapps
-    delegate_to: 35.228.96.73
+    # delegate_to: 35.228.96.73

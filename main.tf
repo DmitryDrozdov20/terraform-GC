@@ -14,11 +14,11 @@ provider "google" {
   zone      = var.zone
   }
 
-#resource "google_compute_address" "vm_stage_ip" {
- # name = stage
+resource "google_compute_address" "vm_stage_ip" {
+  name = "stage_ip"
   #count = var.node_count
   #name = element(tolist(var.instance_tags), count.index)
-#}
+  }
 
 resource "google_compute_instance" "vm_stage" {
   name = "stage"
@@ -44,7 +44,7 @@ resource "google_compute_instance" "vm_stage" {
   network = "default"
 
   access_config {
-    # nat_ip = google_compute_address.vm_stage_ip.address
+    nat_ip = google_compute_address.vm_stage_ip.address
     }
   }
 
@@ -71,7 +71,7 @@ resource "null_resource" "ansible_hosts_provisioner" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
       cat <<EOF >./inventory/hosts
-[staging] 
+[stage] 
 $(terraform output stage_ip)
 [prod]
 $(terraform output stage_ip)
