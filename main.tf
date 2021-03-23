@@ -21,7 +21,7 @@ provider "google" {
 #}
 
 resource "google_compute_instance" "vm_stage" {
-  name = stage
+  name = "stage"
   # count = var.node_count
   # name = element(tolist(var.instance_tags), count.index)
   machine_type = var.machine_type // 2vCPU, 2GB RAM
