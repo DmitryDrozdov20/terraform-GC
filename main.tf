@@ -15,7 +15,7 @@ provider "google" {
   }
 
 resource "google_compute_address" "vm_stage_ip" {
-  name = "stage_ip"
+  name = "stageip"
   #count = var.node_count
   #name = element(tolist(var.instance_tags), count.index)
   }
