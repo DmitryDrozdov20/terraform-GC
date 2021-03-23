@@ -53,7 +53,7 @@ resource "google_compute_instance" "default" {
 
 # Static IP VM for Ansible
 output "ip" {
- value = google_compute_instance.default[count.index].network_interface.0.access_config.0.nat_ip
+ value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
 }
 # Waiting_30s 
 resource  "time_sleep" "wait_30_seconds" {
