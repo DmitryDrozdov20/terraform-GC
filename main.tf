@@ -18,7 +18,7 @@ provider "google" {
  # name = stage
   #count = var.node_count
   #name = element(tolist(var.instance_tags), count.index)
-}
+#}
 
 resource "google_compute_instance" "vm_stage" {
   name = stage
