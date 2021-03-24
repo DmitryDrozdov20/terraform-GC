@@ -58,6 +58,12 @@ output "stage_ip" {
  value = google_compute_instance.vm_stage.network_interface.0.access_config.0.nat_ip
 }
 
+resource "google_compute_address" "vm_prod_ip" {
+  name = "prodip"
+  #count = var.node_count
+  #name = element(tolist(var.instance_tags), count.index)
+  }
+
 resource "google_compute_instance" "vm_prod" {
   name = "prod"
   # count = var.node_count
