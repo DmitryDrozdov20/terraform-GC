@@ -125,16 +125,16 @@ EOF
   }
 }
 
-resource "time_sleep" "wait_59_seconds" {
+resource "time_sleep" "wait_30_seconds" {
   depends_on = [null_resource.ansible_hosts_provisioner]
 
-  create_duration = "59s"
+  create_duration = "30s"
 }
 
 # run playbook on created hosts
 resource "null_resource" "ansible_playbook_provisioner" {
   depends_on = [null_resource.ansible_hosts_provisioner]
   provisioner "local-exec" {
-    command = "sleep 30;ansible-playbook -i ./inventory/hosts playbook.yml"
+    command = "sleep 60;ansible-playbook -i ./inventory/hosts main.yml"
   }
 }
