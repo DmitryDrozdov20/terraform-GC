@@ -1,0 +1,5 @@
+---
+# defaults file for dockerhub_auth
+dockerhub_email: dmitry.drozdov@hotmail.com
+dockerhub_user: fbird75
+dockerhub_token: a7e1468c-a714-434e-a091-127f90727e44

@@ -1,0 +1,12 @@
+---
+- name: Build and push docker image
+  hosts: stage
+  become: yes
+  roles:
+    - build
+
+- name: Deploy boxfuse application
+  hosts: prod
+  become: yes
+  roles:
+    - deploy

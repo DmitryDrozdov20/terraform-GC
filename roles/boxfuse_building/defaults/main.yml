@@ -1,0 +1,5 @@
+---
+# defaults file for boxfuse_building
+dest_dockerfile_path: /home/boxfuse-app
+#Docker Image for Production with boxfuse webapp
+boxfuse_docker_image: fbird75/boxfuse-app:latest
