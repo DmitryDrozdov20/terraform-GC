@@ -122,6 +122,7 @@ resource "null_resource" "ansible_hosts_provisioner" {
       sed -i -e "s/stage_instance_ip/$terraform_stage_ip/g" ./inventory/hosts;
       sed -i -e "s/prod_instance_ip/$terraform_prod_ip/g" ./inventory/hosts;
       sed -i -e 's/"//g' ./inventory/hosts;
+      export ANSIBLE_HOST_KEY_CHECKING=False
     EOT
   }
 }
