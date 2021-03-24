@@ -1,8 +1,5 @@
-# tasks file for boxfuse_container
-- name: Ensure container is present on host and running
-  docker_container:
-      name: '{{ boxfuse_docker_container }}'
-      image: '{{ boxfuse_docker_image }}'
-      state: started
-      ports:
-        - "8080:8080"
+# defaults file for boxfuse_container
+#Docker Container Name on Host
+boxfuse_docker_container: boxfuse-app
+#Docker Image Name used to run container
+boxfuse_docker_image: fbird75/boxfuse-app:latest
