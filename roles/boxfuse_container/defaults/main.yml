@@ -1,12 +1,8 @@
----
-- name: Build and push docker image
-  hosts: stage
-  become: yes
-  roles:
-    - build
-
-- name: Deploy boxfuse application
-  hosts: prod
-  become: yes
-  roles:
-    - deploy
+# tasks file for boxfuse_container
+- name: Ensure container is present on host and running
+  docker_container:
+      name: '{{ boxfuse_docker_container }}'
+      image: '{{ boxfuse_docker_image }}'
+      state: started
+      ports:
+        - "8080:8080"
