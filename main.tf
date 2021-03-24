@@ -125,6 +125,13 @@ resource "null_resource" "ansible_hosts_provisioner" {
     EOT
   }
 }
+
+resource "time_sleep" "wait_5_seconds" {
+  depends_on = [null_resource.ansible_hosts_provisioner]
+
+  create_duration = "5s"
+}
+
 # run playbook on created hosts
 resource "null_resource" "ansible_playbook_provisioner" {
   depends_on = [null_resource.ansible_hosts_provisioner]
