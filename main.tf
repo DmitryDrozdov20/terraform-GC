@@ -115,13 +115,13 @@ resource "null_resource" "ansible_hosts_provisioner" {
   provisioner "local-exec" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
-      cat <<EOF >./inventory/hosts
-[stage] 
-$(terraform output stage_ip)
-[prod]
-$(terraform output prod_ip)
-EOF
-      export ANSIBLE_HOST_KEY_CHECKING=False
+      export terraform_stage_ip=$(terraform output stage_ip);
+      echo $terraform_stage_ip;
+      export terraform_prod_ip=$(terraform output prod_ip);
+      echo $terraform_prod_ip;
+      sed -i -e "s/stage_instance_ip/$terraform_stage_ip/g" ./inventory/hosts;
+      sed -i -e "s/prod_instance_ip/$terraform_prod_ip/g" ./inventory/hosts;
+      sed -i -e 's/"//g' ./inventory/hosts;
     EOT
   }
 }
