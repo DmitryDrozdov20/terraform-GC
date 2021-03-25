@@ -132,8 +132,8 @@ resource "time_sleep" "wait_30_seconds" {
 
 # run playbook on created hosts
 resource "null_resource" "ansible_playbook_provisioner" {
-  depends_on = [null_resource.ansible_hosts_provisioner]
+  depends_on = [time_sleep.wait_30_seconds]
   provisioner "local-exec" {
-    command = "ansible-playbook -i ./inventory/hosts main.yml"
+    command = "sleep 30;ansible-playbook -i ./inventory/hosts main.yml"
   }
 }
