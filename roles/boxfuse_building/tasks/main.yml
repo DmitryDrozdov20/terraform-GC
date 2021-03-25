@@ -14,7 +14,7 @@
     dest: '{{ dest_dockerfile_path }}/Dockerfile'
     mode: '0777'
 
-- name: Build an image using supplied Dockerfile and push it to a private repo
+- name: Build an image using supplied Dockerfile and push it to repo
   docker_image:
     build:
       path: '{{ dest_dockerfile_path }}'
