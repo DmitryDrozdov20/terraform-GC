@@ -110,7 +110,7 @@ resource  "time_sleep" "wait_60_seconds" {
 }
 
 resource "null_resource" "ansible_hosts_provisioner" {
-   depends_on = [time_sleep.wait_30_seconds]
+   depends_on = [time_sleep.wait_60_seconds]
   provisioner "local-exec" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
