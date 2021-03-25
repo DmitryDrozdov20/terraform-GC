@@ -135,6 +135,6 @@ EOF
 resource "null_resource" "ansible_playbook_provisioner" {
   depends_on = [null_resource.ansible_hosts_provisioner]
   provisioner "local-exec" {
-    command = "sleep 30;ansible-playbook -i ./inventory/hosts main.yml"
+    command = "sleep 5;ansible-playbook -i ./inventory/hosts main.yml"
   }
 }
