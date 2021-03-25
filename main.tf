@@ -103,14 +103,14 @@ output "prod_ip" {
 }
 
 # Waiting_30s 
-resource  "time_sleep" "wait_60_seconds" {
+resource  "time_sleep" "wait_90_seconds" {
   depends_on = [google_compute_instance.vm_prod]
 
-  create_duration = "60s"
+  create_duration = "90s"
 }
 
 resource "null_resource" "ansible_hosts_provisioner" {
-   depends_on = [time_sleep.wait_60_seconds]
+   depends_on = [time_sleep.wait_90_seconds]
   provisioner "local-exec" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
