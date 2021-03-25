@@ -82,7 +82,7 @@ resource "google_compute_instance" "vm_prod" {
   }
 
   # Startup script - update, install python3-pip (for Ansible) 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y; sudo apt-get install docker.io -y"
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y"
 
   network_interface {
   network = "default"
