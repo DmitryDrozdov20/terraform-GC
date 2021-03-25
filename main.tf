@@ -103,14 +103,14 @@ output "prod_ip" {
 }
 
 # Waiting_30s 
-resource  "time_sleep" "wait_90_seconds" {
+resource  "time_sleep" "wait_30_seconds" {
   depends_on = [google_compute_instance.vm_prod]
 
-  create_duration = "90s"
+  create_duration = "30s"
 }
 
 resource "null_resource" "ansible_hosts_provisioner" {
-   depends_on = [time_sleep.wait_90_seconds]
+   depends_on = [time_sleep.wait_30_seconds]
   provisioner "local-exec" {
     interpreter = ["/bin/bash" ,"-c"]
     command = <<EOT
@@ -125,9 +125,9 @@ EOF
   }
 }
 
-resource "time_sleep" "wait_5_seconds" {
+resource "time_sleep" "wait_15_seconds" {
   depends_on = [null_resource.ansible_hosts_provisioner]
-  create_duration = "5s"
+  create_duration = "15s"
 }
 
 # run playbook on created hosts
