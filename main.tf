@@ -102,11 +102,11 @@ output "prod_ip" {
  value = google_compute_instance.vm_prod.network_interface.0.access_config.0.nat_ip
 }
 
-# Waiting_30s 
-resource  "time_sleep" "wait_30_seconds" {
+# Waiting_60s 
+resource  "time_sleep" "wait_60_seconds" {
   depends_on = [google_compute_instance.vm_prod]
 
-  create_duration = "30s"
+  create_duration = "60s"
 }
 
 resource "null_resource" "ansible_hosts_provisioner" {
@@ -125,9 +125,9 @@ EOF
   }
 }
 
-resource "time_sleep" "wait_10_seconds" {
+resource "time_sleep" "wait_30_seconds" {
   depends_on = [null_resource.ansible_hosts_provisioner]
-  create_duration = "10s"
+  create_duration = "30s"
 }
 
 # run playbook on created hosts
