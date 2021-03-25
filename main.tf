@@ -134,6 +134,6 @@ resource "time_sleep" "wait_5_seconds" {
 resource "null_resource" "ansible_playbook_provisioner" {
   depends_on = [null_resource.ansible_hosts_provisioner]
   provisioner "local-exec" {
-    command = "sleep;ansible-playbook -i ./inventory/hosts main.yml"
+    command = "ansible-playbook -i ./inventory/hosts main.yml"
   }
 }
