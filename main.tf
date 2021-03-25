@@ -84,6 +84,10 @@ resource "google_compute_instance" "vm_prod" {
   # Startup script - update, install python3-pip (for Ansible) 
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3-pip -y"
 
+  metadata = {
+    ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
+    }
+
   network_interface {
   network = "default"
 
@@ -91,11 +95,7 @@ resource "google_compute_instance" "vm_prod" {
     nat_ip = google_compute_address.vm_prod_ip.address
     }
   }
-
-  metadata = {
-    ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
-    }
-  }  
+}  
 
 # Static IP VM for Ansible
 output "prod_ip" {
